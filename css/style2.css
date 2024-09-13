@@ -1,0 +1,21 @@
+h2 {
+    color: blue;
+}
+
+.boxmodel {
+    border: 5px solid red;
+    display: inline-block;
+    padding: 5px 20px;
+    margin: 0px 20px;
+    /* width and height is used to change content of a box */
+}
+
+p {
+    font-size: 20px;
+}
+
+span {
+    color: purple;
+    font-size: 5em;
+    /* 5em means 5 times the containing element that is 5 times of 20px rem is the size in relation to the root element the html so 5 times the size of the html */
+}

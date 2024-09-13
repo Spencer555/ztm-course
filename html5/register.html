@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- semantic elements -->
+    <header>
+        <h1>Register</h1>
+    </header>
+    <nav>
+        <a href="www.google.com">Google</a>
+    </nav>
+    <footer>
+        <p>made with love</p>
+    </footer>
+    <form method="POST">
+
+        First Name: <input type="text" name="firstname">
+        <br> Last Name: <input type="text" name="lastname">
+        <br> Email: <input type="email" required name="email">
+        <br> Password: <input type="password" min="5" required name="password">
+        <br> Birthdate: <input type="date" required name="birthdate">
+        <br> Gender: Female: <input type="radio" name="gender" value="female"> Male: <input type="radio" name="gender" value="male"> Other: <input type="radio" name="gender" value="other">
+        <br> Pets: Cats: <input type="checkbox" name="'cats" value="cats"> Dogs: <input type="checkbox" name="dogs" values="dogs">
+        <br> Cars:
+        <select multiple>
+            <option value="Volvo">Volvo</option>
+            <option value="Audi">Audi</option>
+        </select>
+        <br>
+        <input type="submit" value="Register">
+        <br>
+        <input type="reset">
+        <!-- this is a comment  -->
+    </form>
+</body>
+
+</html>

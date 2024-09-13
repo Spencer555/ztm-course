@@ -1,0 +1,117 @@
+/* Selector {
+    property: value
+} */
+
+.poiret-one-regular {
+    font-family: "Poiret One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    /* for all elements */
+    text-align: right;
+}
+
+body {
+    background-image: url('venti-views-bS5OwMjMc1I-unsplash.jpg');
+    background-size: cover;
+}
+
+h2,
+p {
+    color: #AA4139;
+    text-align: center;
+    /* rgba allows u to set a fourth num as opacity from 0 to 1 */
+    border: 5px dashed rgba(255, 176, 170, 0.7);
+    cursor: pointer;
+}
+
+p {
+    color: pink;
+}
+
+li {
+    list-style: none;
+    display: inline;
+    font-weight: bold;
+}
+
+a {
+    color: #fff;
+}
+
+.webtext {
+    border: 5px dashed blue;
+}
+
+.active {
+    color: red;
+}
+
+#div1 {
+    background-color: rgba(0, 0, 255, 0.2);
+}
+
+#div2 {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+p.about {
+    text-decoration: underline;
+    text-transform: capitalize;
+    line-height: 30px;
+    /* height of each line */
+    font-style: italic;
+    font-weight: bold;
+    font-size: 80%;
+    font-family: 'Poiret One', Georgia, 'Times New Roman', Times, serif;
+}
+
+
+/* float is used to move images to right or left */
+
+
+/* use it with images */
+
+img {
+    float: left
+}
+
+
+/* this comes with the property after the floted obj u must clear the float */
+
+footer {
+    clear: both;
+    text-align: center;
+}
+
+
+/* h2 p{} all p tags inside h2 */
+
+
+/* h2 > p{} all p tags with parents of h2 */
+
+
+/* h2 + p{} select  p tags after h2 elements */
+
+
+/* :hover when u hover over something */
+
+
+/* :first-child the first child */
+
+
+/* :last-child the last child */
+
+
+/* p {
+color: red !important; 
+it overides all p to make it pink
+}
+*/
+
+
+/* 
+specificty
+source order the css and the bottom overrides the top if same element is specified */
