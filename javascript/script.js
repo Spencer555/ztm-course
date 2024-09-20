@@ -190,3 +190,48 @@ do {
 // window is the parent of everything in the browser and anytime u use a function and dont specify anything it assumes u are talking about the window object
 
 // to listen to an event and supply a funtion to run when the event happens is called a callback function
+
+
+
+// scope
+// it means variables access what variables u have access to when the code is running 
+// by default u are in the root scope which is the window object in javascript
+
+
+// pro is a local scope because it can only be accessed inside the function 
+// but the function has access to root scope
+function bb() {
+    var pro = 'speed'
+}
+
+
+// tenary operator 
+
+condition ? expr1 : expr2
+
+2 === "2" ? 'true' : 'false'
+
+// switch statement used for when u have a lot of conditions
+
+function moveCommand(direction) {
+    var whatHappens;
+    switch (direction) {
+        case "forward":
+            whatHappens = 'you become a monster';
+            break;
+        case "back":
+            whatHappens = 'you become a god';
+            break;
+        case "right":
+            whatHappens = 'you become a devil';
+            break;
+        case "left":
+            whatHappens = 'you become all you can be';
+            break;
+        default:
+            whatHappens = 'enter a valid direction'
+
+    }
+
+    return whatHappens
+}
