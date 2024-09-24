@@ -254,10 +254,10 @@ function moveCommand(direction) {
 // const use for anything thats not going to change 
 
 const player = "bobby";
-let experience =100;
-let wizardLevel = false; 
+let experience = 100;
+let wizardLevel = false;
 
-if (experience > 90){
+if (experience > 90) {
     let wizardLevel = true;
     console.log('internal', wizardLevel);
 }
@@ -269,14 +269,14 @@ console.log('external', wizardLevel);
 const obj = {
     player: 'bobby',
     experience: 100,
-    wizardLevel: false 
+    wizardLevel: false
 };
 
 // u cant reassign with const
 obj = 6;
 
 // but u can update 
-obj.wizardLevel = true ;
+obj.wizardLevel = true;
 
 //destructring 
 const player2 = obj.player
@@ -285,38 +285,40 @@ const wizardLevel2 = obj.wizardLevel
 
 // instead of this u can do this 
 
-const {player1, experience1} = obj;
-let {wizardLevel1} = obj;
+const { player1, experience1 } = obj;
+let { wizardLevel1 } = obj;
 
 
 // u can assign dynamic values to objects
 const myObj = {
     [name]: 'hello',
-    [1+2] : 3
+    [1 + 2]: 3
 };
 
 const a = "simon";
-const b = true; 
+const b = true;
 const c = {};
 
 // if property and value are the same we just list only one 
 
 const obj = {
-    a,b,c
+    a,
+    b,
+    c
 };
 
 // instead of 
 const obj = {
-    a:a, 
-    b:b, 
-    c:c
+    a: a,
+    b: b,
+    c: c
 };
 
 // template string 
 `this is ${obj.a}`
 
 // default arguments for functions 
-function greet(name="spencer"){
+function greet(name = "spencer") {
     return console.log(`hello ${name}`);
 };
 
@@ -330,13 +332,13 @@ var sym3 = Symbol("foo");
 
 // arrow function 
 
-function add (a , b){
+function add(a, b) {
     return a + b
 }
 
 // becomes 
 
-(a,b)=>a+b;
+(a, b) => a + b;
 
 
 // advanced functions 
@@ -366,7 +368,7 @@ const multiply = (a, b) => a * b;
 // to run this 
 multiply(3, 4)
 
-const curriedMultiplied = (a) => (b) => a*b;
+const curriedMultiplied = (a) => (b) => a * b;
 // to run this - we are passing the parameters one at a time
 // so we call the function once we run it with a it returns another function that accepts b the run to return results
 curriedMultiplied(3)(4);
@@ -378,17 +380,17 @@ const multiplyBy5 = curriedMultiplied(5)
 
 // compose - the act of putting two functions together to form a third function where the output of one function is the input of another
 // both f and g are functions
-const compose = (f,g) => (a) => f(g(a));
+const compose = (f, g) => (a) => f(g(a));
 
 // e.g we have a sum function that takes a number adds 1
 
 const sum = (num) => num + 1
 
 compose(sum, sum)(5)
-// to understand a is 5 so on the first run f(g(5))
-// the the two function parameter the which is sum, g function runs  which adds one so 5 becomes 6
-// f(6)
-// and the f is also the same sum function which adds one again so it become 7
+    // to understand a is 5 so on the first run f(g(5))
+    // the the two function parameter the which is sum, g function runs  which adds one so 5 becomes 6
+    // f(6)
+    // and the f is also the same sum function which adds one again so it become 7
 
 // avoid side effects and functional purity and always return a value
 // this create determinsitc - means no matter the input the return value is the same
@@ -398,13 +400,14 @@ compose(sum, sum)(5)
 
 // e.g 
 var ad = 2
-function b(){
+
+function b() {
     ab = 43 //this is  a side effect
 }
 
 // arrays 
 // map, filter, reduce
-const array = [1,2,3,4,5];
+const array = [1, 2, 3, 4, 5];
 
 const double = []
 
@@ -413,7 +416,7 @@ const double = []
 // foreach just applys to each element and does not return so use map
 // it does not create a new array
 const newArray = array.forEach((num) => {
-    double.push(num*2)
+    double.push(num * 2)
 })
 
 
@@ -421,8 +424,8 @@ const newArray = array.forEach((num) => {
 // its creates a new array
 // and there are not side effects and this becomes a pure function
 // and not changing the original array
-const mapArray= array.map((num) => {
-    return num *2
+const mapArray = array.map((num) => {
+    return num * 2
 })
 
 // since we are returning only a single line
@@ -441,10 +444,10 @@ const filterArray = array.filter(num => num > 3)
 // accumulator it remembers what was there previously 
 // u must also return 
 // u can specify what u want acuumulator to start with which is 0
-const array1 = [1,2,3,4,5];
+const array1 = [1, 2, 3, 4, 5];
 
 // so this becomes starting from 0 
-0+1+2+3+4+5
+0 + 1 + 2 + 3 + 4 + 5
 const reduceArray = array1.reduce((accumulator, num) => accumulator + num, 0)
 
 
@@ -453,9 +456,9 @@ const reduceArray = array1.reduce((accumulator, num) => accumulator + num, 0)
 
 
 // reference type
-const obj1 = {value:10};
+const obj1 = { value: 10 };
 const obj2 = obj1;
-const obj3 = {value:10}
+const obj3 = { value: 10 }
 
 obj1 === obj2 //true 
 
@@ -469,7 +472,7 @@ obj1 === obj3 //false
 
 // a reference type which is a non primitive type are not defined by the programming language this means they are created by the programmer
 
-1===1 //javascript knows its a number datatype so it would be always true 
+1 === 1 //javascript knows its a number datatype so it would be always true 
 
 // but 
 // obj1 was created by the programmer so if not referenced no two can be the same even if the have the same values
@@ -482,10 +485,10 @@ obj1 === obj3 //false
 // this = means the object environment we are in right now the left 
 // of the dot
 // this in this case would be obj1
-obj1.person 
+obj1.person
 
 // in this case the this is the window object but when that same function is in an object the this is an object
-function a(){
+function a() {
     console.log(this)
 }
 
@@ -495,15 +498,15 @@ function a(){
 // if u ever want to make a copy of an object it a good idea to do this
 class Player {
     // everytime u make a copy of the player class the first thing that get run is the construtor function
-    constructor(name, type){
+    constructor(name, type) {
         console.log('player', this)
-        this.name = name; 
+        this.name = name;
         this.type = type;
     }
-    
+
     // a method 
     // so any player you create would be able to introduct it self 
-    introduce(){
+    introduce() {
         console.log(`Hi I am ${this.name} and of type ${this.type}`)
     }
 }
@@ -511,13 +514,13 @@ class Player {
 // add on top what ever a player has 
 class Wizard extends Player {
 
-    constructor(name, type, age){//properties from wizard class
-        super(name, type)//the constructor function of the player and the properties u want to pass from the player class
+    constructor(name, type, age) { //properties from wizard class
+        super(name, type) //the constructor function of the player and the properties u want to pass from the player class
         console.log('wizard', this)
 
     }
 
-    play (){
+    play() {
         console.log(`Weeeee i'am a ${this.type}`)
     }
 }
@@ -533,8 +536,8 @@ const wizard2 = new Wizard("Shawn", "Dark Magic", 322)
 // and they dont know of each other existance that what we call pass by value 
 
 // a have the address of where the primitive value 5 sits in memory and same with b it has the address of 10
-var a = 4 
-var b = 10 
+var a = 4
+var b = 10
 
 // so if u do u are copying the value an putting it in a new memory space so if one is updated it does not affect the other this is is pass by value 
 var b = a
@@ -542,8 +545,8 @@ var b = a
 
 // but
 // objects know of each other existance thats why we call them pass by reference
-let obj1 = {name:'rda', pass:'1253'};
-let obj2 = obj1 
+let obj1 = { name: 'rda', pass: '1253' };
+let obj2 = obj1
 
 // so if u edit obj2 it affects object one if u edit object 1 it affect obj2 
 // because obj are stored in memory and pass by reference so when we assign obj we just show reference to the address of the object not the value so if u change the pass it affects both since they are both referencing it 
@@ -555,19 +558,19 @@ obj2.pass = 'redme'
 
 // so to copy an obj and not referenced so as to not affect the main one 
 // for arrays 
-var c = [1,2,3,4,5];
+var c = [1, 2, 3, 4, 5];
 
 var d = [].concat(c);
 
 // to copy an object 
-let obj = {a:'a', b:'b',c:'c'};
+let obj = { a: 'a', b: 'b', c: 'c' };
 
 
 // let objClone = Object.assign(object to copy to , sourceobj)
 let objClone = Object.assign({}, obj)
 
 // or 
-let objClone1 = {...obj}
+let objClone1 = {...obj }
 
 // this is a shallow clone so it wont work on objects containing objects if the sub objects are updated
 // but if u have an object containing an object we use a superclone 
@@ -581,18 +584,19 @@ let superclone = JSON.parse(JSON.stringify(obj))
 // type cohesion happens when u use double equal == it tells js to compare the 2 types and coherce one to the other  if not the same 
 
 1 == '1' // is true 
-// but
- 1 === '1' //is not true because it checks for type
+    // but
+1 === '1' //is not true because it checks for type
 
 //  it also same for if statements converting numbers to true or false 0 and 1 
 
 
 // in js the is a concept of  -0 and +0 
--0 === +0 // gives u true even though they are different 
+-
+0 === +0 // gives u true even though they are different 
 NaN === NaN // gives u false even though true 
 
-Object.is(-0,+0) // gives u false if u check the two parameters
-// Object.is works the same as === for the -0 +0 and for NaN
+Object.is(-0, +0) // gives u false if u check the two parameters
+    // Object.is works the same as === for the -0 +0 and for NaN
 
 
 // es 7 2016 
@@ -603,31 +607,31 @@ var hello = 'hii helloo'
 
 hello.includes('hi') //true
 
-var array =  [2,3,4,5,6,7]
+var array = [2, 3, 4, 5, 6, 7]
 
 array.includes(3) //true 
 
 
 // exponential operator
 // to get the exponent of a number
-const square = (x) => x**2
-const cube = (x) => x**3
+const square = (x) => x ** 2
+const cube = (x) => x ** 3
 
 
 // es8 2017 
-"spencer".padStart(10)
+    "spencer".padStart(10)
 "        spencer" //10 spaces before spencer
 
 // .trim to remove whitespaces
 
 'spencer'.padEnd(5)
-'spencer     '//5 spaces after spencer
+'spencer     ' //5 spaces after spencer
 
 // tralling commas, functions parameter lists and calls used for when u have long parameter list 
-const fun = (a,b,c,d,) => {
+const fun = (a, b, c, d, ) => {
     console.log(a)
 }
-fun(1,2,3,4) // returns a which is 1
+fun(1, 2, 3, 4) // returns a which is 1
 
 const obj = {
     username0: 'Santa',
@@ -645,10 +649,10 @@ Object.keys(obj).forEach((key, index) => {
 })
 
 // but now u can loop thru the values only 
-Object.values(obj).forEach(value => {console.log(value)})
+Object.values(obj).forEach(value => { console.log(value) })
 
 // but now u can loop thru the entries u get an array of property and value or key and balue 
-Object.entries(obj).forEach(value => {console.log(value)})
+Object.entries(obj).forEach(value => { console.log(value) })
 
 
 
@@ -660,8 +664,8 @@ Object.entries(obj).map(value => {
 
 // so now we get displayed
 'Santa0',
-    'Rudolf1',
-    'Mr.Grinch2'
+'Rudolf1',
+'Mr.Grinch2'
 
 
 
@@ -669,16 +673,16 @@ Object.entries(obj).map(value => {
 flat() // a method to be used on array it returns a new array that makes nested arrays flat only one array on only one level 
 
 
-const array = [1,2,3,4,5 , [7,8,6]]
+const array = [1, 2, 3, 4, 5, [7, 8, 6]]
 array.flat() //[1,2,3,4,5,7,8,6]
 
-const array = [1,2,3,4,5 , [7,8,6, [4,3]]]
+const array = [1, 2, 3, 4, 5, [7, 8, 6, [4, 3]]]
 array.flat(3) //flaten the array by 3 layer
 
 
 
-const entries = ['bob', 'sally',,,,,,,,'cindy']
-// using  flat we can flat out the entries and clean out our data 
+const entries = ['bob', 'sally', , , , , , , , 'cindy']
+    // using  flat we can flat out the entries and clean out our data 
 entries.flat() // ['bob', 'sally', 'cindy']
 
 
@@ -689,17 +693,21 @@ const chaos = array.flatMap(creature => creature + '#')
 
 
 let email = '                spl@gmail.com'
-let email1 = 'spl@gmail.com               '   
+let email1 = 'spl@gmail.com               '
 
 // trim start 
 email.trimStart() //remove spaces from start 
-email.trimEnd()// remove spaces from end
+email.trimEnd() // remove spaces from end
 email.trim() //remove from both sides
 
 
 // fromEntries - receives an array and converts it to an object
-userProfiles = [['commanderTom', 23], ['derekZlander', 40], ['hansel', 18]]
-// convert the arrays to objects 
+userProfiles = [
+        ['commanderTom', 23],
+        ['derekZlander', 40],
+        ['hansel', 18]
+    ]
+    // convert the arrays to objects 
 Object.fromEntries(userProfiles)
 
 // becomes 
@@ -707,9 +715,9 @@ Object.fromEntries(userProfiles)
 
 
 // try catch
-try{
-   4+5
-} catch(error) {
+try {
+    4 + 5
+} catch (error) {
     // catch the error
     console.log('error is caught: ', error)
 }
@@ -719,9 +727,9 @@ try{
 const basket = ['apples', 'oranges', 'grapes'];
 
 const detailedBasket = {
-    appels:5, 
-    oranges:10, 
-    grapes:1000
+    appels: 5,
+    oranges: 10,
+    grapes: 1000
 }
 
 basket.forEach(item => {
@@ -731,14 +739,14 @@ basket.forEach(item => {
 // for of loop this gets the values
 // iterating over array and strings
 // iterable is for only arrays and strings and for of loop does not work with object
-for (i of basket){
+for (i of basket) {
     console.log(i)
 }
 
 // for in loop -allows u to see the object properties
 // deals with objecs
 // with an objects it is not iterating but enumerating because properties of an objects is what we call enumerable
-for (i in basket){
+for (i in basket) {
     console.log(i)
 }
 
@@ -763,14 +771,14 @@ for (i in basket){
 
 // optional chaining 
 
-let will_pokemon = {rap:'birdman', gender:'man', race:'black', power:''}
+let will_pokemon = { rap: 'birdman', gender: 'man', race: 'black', power: '' }
 
 // it does not throw an error if the property does not yet exist or loaded it would return undefined rather
-will_pokemon?.rap  
+will_pokemon ? .rap
 
 
 // nullish coalesing ?? usefull for occasions that use or
-will_pokemon?.rap ?? ;
+will_pokemon ? .rap ? ? ;
 
 
 // es 2021 
@@ -782,8 +790,8 @@ str.replaceAll("best", 'great')
 
 // es 2022
 // .at( )
-const  arr = [100, 200, 300, 400, 50000, 10]
-// get the second to last item from the array 
+const arr = [100, 200, 300, 400, 50000, 10]
+    // get the second to last item from the array 
 arr[arr.length - 2]
 
 // now  to get the second to last item u just give it the index
@@ -793,16 +801,16 @@ arr.at(-2)
 
 // es2023
 const ztmMonsters = [
-    {id:1, monster:'Mr, Mouse', level:1},
-    {id:2, monster:'Mac', level:30},
-    {id:3, monster:'Denodude', level:17},
-    {id:4, monster:'Pye', level:5},
+    { id: 1, monster: 'Mr, Mouse', level: 1 },
+    { id: 2, monster: 'Mac', level: 30 },
+    { id: 3, monster: 'Denodude', level: 17 },
+    { id: 4, monster: 'Pye', level: 5 },
 ]
 
 // find the monsters level 15 or higher and pick the last one on the list
 // old way 
 const advancedMonsters = ztmMonsters.filter(item => item.level > 15)
-console.log(advancedMonsters.length -1)
+console.log(advancedMonsters.length - 1)
 
 // new way 
 findLast()
@@ -830,25 +838,25 @@ let lastMonsterIndex = ztmMonsters.findLastIndex(item => item.level > 15)
 
 // es 2024
 const pokemons = [
-    { name: "bulbasaur", type: "grass"},
-    { name: "blastoise", type: "water"},
-    { name: "charmander",  type: "fire"},
-    { name: "ivysaur", type: "grass"},
-    { name: "charmeleon",  type: "fire"},
-    { name: "charizard",  type: "fire"},
-    { name: "squirtle", type: "water"},
-    { name: "venusaur", type: "grass"},
-    { name: "wartortle", type: "water"},
-    { name: "pikachu", type: "electric"}
-  ]
-  
-  
+    { name: "bulbasaur", type: "grass" },
+    { name: "blastoise", type: "water" },
+    { name: "charmander", type: "fire" },
+    { name: "ivysaur", type: "grass" },
+    { name: "charmeleon", type: "fire" },
+    { name: "charizard", type: "fire" },
+    { name: "squirtle", type: "water" },
+    { name: "venusaur", type: "grass" },
+    { name: "wartortle", type: "water" },
+    { name: "pikachu", type: "electric" }
+]
+
+
 // groupBy() - a quick way to organize collections based on a string values it can be used on objects not arrays 
 // it takes items and selector as a parameter 
 // it takes the collection and the callback method
 // this return the collections based on types
 Object.groupBy(pokemons, (i) => {
-    return i.type; 
+    return i.type;
 })
 
 // modules 
@@ -856,8 +864,8 @@ Object.groupBy(pokemons, (i) => {
 // but what it is, is a module bundler it runs b4 u put the website online it reads thru all js files and syntax and bundles everything into a single file the it creates a file called bundle.js when developers are working on it we have our own seprate files but when we are putting it out we run it thru browserfy b4 putting it out in public
 
 // first javascript file 
-module.exports = function add(a, b){
-    return a+b
+module.exports = function add(a, b) {
+    return a + b
 }
 
 // file we are importing to 
@@ -867,18 +875,18 @@ var add = requre('./add')
 
 // now with es and webpack 
 // js1 
-export const add =(a,b) => a+b 
+export const add = (a, b) => a + b
 
 // or 
 
-export default function add(){
-    return a+b
+export default function add() {
+    return a + b
 }
 
 //js2
-import {add} from './add'
-or 
-import add from './add' 
+import { add } from './add'
+or
+import add from './add'
 
 
 // webpack is also a module bundler like browerfiy which allows us to use es6 in all browsers
@@ -887,12 +895,20 @@ import add from './add'
 // debugging - why ur code is having errors or not acting the way its supposed to
 // e.g.
 
-const flattened = [[0,1], [2,3], [4,5]].reduce(
-    (a,b) => a.concat(b), [])
+const flattened = [
+    [0, 1],
+    [2, 3],
+    [4, 5]
+].reduce(
+    (a, b) => a.concat(b), [])
 
 // how i would debug this we change the name for it to make sense to us
 
-const flattened1 = [[0,1], [2,3], [4,5]].reduce(
+const flattened1 = [
+    [0, 1],
+    [2, 3],
+    [4, 5]
+].reduce(
     (accumulator, array) => {
         console.log('array', array);
         console.log('accumulator', accumulator);
@@ -903,11 +919,18 @@ const flattened1 = [[0,1], [2,3], [4,5]].reduce(
 
 // u can also use debugger - just like set_trace python
 // add allows u to step thru the function step by step
-const flattened2 = [[0,1], [2,3], [4,5]].reduce(
+const flattened2 = [
+    [0, 1],
+    [2, 3],
+    [4, 5]
+].reduce(
     (accumulator, array) => {
         debugger;
         return accumulator.concat(array)
     }, [])
+
+
+
 
 
 
