@@ -1,0 +1,67 @@
+to clone a project 
+git clone link
+
+
+git status 
+see the state of ur project tracked and untracked
+
+
+git commit -m "message"
+commit to repo 
+
+
+git add .
+add files and folders in the directory
+git add filename
+to add  one file 
+
+
+git pull 
+to pull the changes
+
+dont work on master always branch off 
+git branch - show list of branches 
+git branch littlefeature 
+create littlefeature branch
+
+
+git checkout littlefeature - branch to littlefeature
+
+then review and merge
+
+make sure u do git pull to get the latest changes before u update 
+
+
+to merge two brances 
+
+go to the branch u want to merge 
+git checkout littlefeature
+
+git merge master 
+
+means merge master with littlefeature 
+
+every once in a while pull master and merge into your branch to make sure u dont miss updates ur team mates made
+
+fork a project
+copy the entire project and put it on your own github
+
+git diff 
+to see changes made 
+
+
+to keep ur forked directory up to date 
+
+git remove -v to see ur current fork 
+
+git remote add upstream url for git project u forked 
+
+to verify u should type 
+git remove -v now u should have 4 links ur fork should be origin and the original should be upstream 
+
+then 
+git pull upstream master
+
+
+to remove the origial origin of a forked project 
+git remote remove origin now you have only the original copy to worry about

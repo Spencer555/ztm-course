@@ -1,0 +1,27 @@
+node allows us to write javascript outside the browser 
+
+if u install with -g u can run in your terminal if without u can run only in project 
+
+install browserfiy 
+
+to bundle the file 
+browserify script.js > bundle.js
+
+
+
+lodash ^4.14.4
+the numbers is called semver(semantic versioning) they each have meanings 
+
+the last .4 - the patch release any bug fixes is updated here 
+.17 - minor release new features added to loadash but there are not major changes 
+first 4 - this is a major release and might break some of the websites that depend on it 
+
+
+dev dependencies are packages needed for only development and testing
+
+npm scripts lets you do commands from package.json 
+
+e.g 
+"start": "browserify scripts.js > bundle.js && live-server"
+
+visit semver.npm.js to tell you the right version to download of a package 
