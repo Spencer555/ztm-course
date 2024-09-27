@@ -1,0 +1,84 @@
+minimize the dom manipulation u have to do for speed  
+
+npx is a cli tool whose purpose is to make it easy to install and manage dependencies hosted in the npm registry
+
+u can use create react app or vite (is super fast and performant)
+but create react app has been around and more solid 
+
+using vite 
+
+npm create vite@latest then follow prompt 
+
+
+a dot file is a config file 
+
+.gitignore 
+.env 
+
+react-dom - it connect the react to the dom
+
+react has webpack underneth the hood that does the bundling for us 
+
+export default means it exports only one thing
+
+
+// state is an object that describes your application 
+// props are things that comes out of state 
+// a parent feeds state to the child as soon as the child receives the state its a  props which the child can never change 
+children - they are children
+
+mounting is the start of the app and these are the lifecycle hooks that get hit  in order what it looks for
+constructor()
+componentWillMount()
+render()
+componentDidMount()
+
+
+updating can be caused by changes to props or state
+when ever a component changes 
+componentWillReceiveProps()
+shouldComponentUpdate()
+componentWillUpdate()
+render()
+componentDidUpdate()
+
+unmounting - this is called when a component is being removed from a dom
+
+
+when u run npm build it produces an optimized version for production 
+
+to update 
+npm update
+in your package.json
+"react-dom": "^18.3.1",
+this means upgrade to the minor relase so if 19 is available it would still upgrade to the highest 18 available  to avoid breaking changes
+
+update to the highest available
+"react-dom": ">18.3.1",
+
+or change the version manully when u check from the docs
+
+npm audit fix 
+to fix vulnerabilites 
+
+npm audit fix --force 
+to force fix  
+
+then open the app and see if things are still  working 
+and check console to see if there are errors
+
+the easiest way to keep your project up to date is to update package.json
+
+
+convert create-react-app to vite 
+main.jsx is index.js in create react 
+copy and paste component
+and rename file extentions to jsx
+
+in package.json copy except react-scripts because thats for create react app 
+
+
+then run npm run dev to run app
+
+
+error boundry we wrap it around a component and if the component fails we catch it
