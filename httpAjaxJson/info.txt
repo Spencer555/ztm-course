@@ -1,0 +1,71 @@
+https is the foundation for any data exchange on the web 
+
+the client is the browser sends the request in http and the server receives and understands and sends html and other docs 
+
+client and servers can communicate by exchanging messages 
+messages sent by client is requests 
+messages sent by server is responses
+
+
+the words for http 
+get - i want to get an html file 
+post - i want to send over data to servers
+put - i want to send u data and update the existing one 
+delete - i want you to delete a data 
+
+
+server responds with http 
+visit w3 schools to view them
+100 - 199 information responses 
+200 - 299 sucessfull responses 
+300 - 399 redirection messages 
+400 - 499 client error responses 
+500 - 599 server error responses
+
+
+
+json - javascript object notation  a syntax for  storing and exhangeing data 
+
+it can be read by any coding language then the server receives it changes it to its language understands it then responds back in json
+
+only text can be exhange between browser and server
+
+in javascript we use JSON.parse() and JSON.stringify() to control it
+
+
+ajax new way is fetch
+
+this helped build single page apps
+
+
+a promise- i am making a request over the internet and i promise to let you know when i have the value returned. fetch is a promise but i prefer axios
+
+instead of json.parse fetch comes with its own method .json which converts to js for us 
+fetch('url').then(response => response.json())
+
+
+a promise is an object that may produce a single value some time in the future either a resolved value or a reason that its not resolved
+
+it may be in one of 3 possible states 
+fulfilled, rejected, pending
+
+
+callbacks was what we had before promises and it was a pyramid of doom 
+
+movePlayer(100, 'left' , function{
+    movePlayer(200, 'left' , function{
+    movePlayer(400, 'left' , function{
+    
+})
+})
+})
+
+but with a promise 
+movePlayer(100, 'left')
+.then(() => movePlayer(400, 'left'))
+.then(() => movePlayer(200, 'left'))
+
+el.addEventListener('click', submitForm);
+here the submitForm is the callback
+
+promises are great for async programming when you dont want js to block the execution of your code

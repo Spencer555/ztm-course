@@ -82,3 +82,21 @@ then run npm run dev to run app
 
 
 error boundry we wrap it around a component and if the component fails we catch it
+
+
+
+how to learn new features 
+first 
+read the docs 
+then read the motivation why did  the library add this 
+classes dont minify well and hooks are more performant and easy to understand
+
+
+hooks are functions that let you hook into react state and lifecycle features from function component hooks dont work inside clasess 
+
+
+u can only call hooks from top level and react functions
+it cant be used in if statements or loops or functions 
+
+u can build your own hook 
+read the doc
