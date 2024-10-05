@@ -6,6 +6,7 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
 import ParticlesBg from 'particles-bg'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
+import './App.css'
 
 export default function App() {
 
@@ -27,10 +28,10 @@ export default function App() {
         console.log(width, height)
         return {
             // we multiply the col by the width of the image to get the exact point
+            bottomRow: height - (clarifaiFace.bottom_row * height),
             leftCol:clarifaiFace.left_col * width,
             rightCol:width - (clarifaiFace.right_col * width),
             topRow: clarifaiFace.top_row * height,
-            bottomRow: height - (clarifaiFace.bottom_row * height)
         }
         // regions.forEach(region => {
         //     // Accessing and rounding the bounding box values
