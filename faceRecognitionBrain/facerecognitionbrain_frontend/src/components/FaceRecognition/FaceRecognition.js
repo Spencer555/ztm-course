@@ -10,12 +10,6 @@ export default function FaceRecognition({imageUrl, box}) {
 
 
 <div className='bounding-box' style={{top:box.topRow, right:box.rightCol, bottom:box.bottomRow, left:box.leftCol}}> </div>
-{/* <div className='bounding-box' style={{top:box.topRow, right:box.rightCol, bottom:box.bottomRow, left:box.leftCol}}> </div> */}
-
-{console.log(box.topRow)}
-{console.log(box.rightCol)}
-{console.log(box.bottomRow)}
-{console.log(box.leftCol)}
         </div>
  
    

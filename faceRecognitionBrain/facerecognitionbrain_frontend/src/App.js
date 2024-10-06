@@ -16,47 +16,36 @@ export default function App() {
 
 
     const calculateFaceLocation = (data) => {
-        const regions = data.outputs[0].data.regions;
-
-        const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-        console.log(clarifaiFace)
-
-        const image = document.getElementById('inputImage');
-        const width = Number(image.width)
-        const height = Number(image.height)
-
-        console.log(width, height)
-        return {
-            // we multiply the col by the width of the image to get the exact point
-            bottomRow: height - (clarifaiFace.bottom_row * height),
-            leftCol:clarifaiFace.left_col * width,
-            rightCol:width - (clarifaiFace.right_col * width),
-            topRow: clarifaiFace.top_row * height,
-        }
-        // regions.forEach(region => {
-        //     // Accessing and rounding the bounding box values
-        //     const boundingBox = region.region_info.bounding_box;
-        //     const topRow = boundingBox.top_row.toFixed(3);
-        //     const leftCol = boundingBox.left_col.toFixed(3);
-        //     const bottomRow = boundingBox.bottom_row.toFixed(3);
-        //     const rightCol = boundingBox.right_col.toFixed(3);
-
-        //     region.data.concepts.forEach(concept => {
-        //         // Accessing and rounding the concept value
-        //         const name = concept.name;
-        //         const value = concept.value.toFixed(4);
-
-        //         console.log(`${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`);
-
-        //     });
-        // });
+        
+        
+            const regions = data.outputs[0].data.regions; // Check if 'regions' still exists
+            console.log(data)
+        
+            if (regions && regions.length > 0) {
+                const clarifaiFace = regions[0].region_info.bounding_box;
+                const image = document.getElementById('inputImage');
+                const width = Number(image.width);
+                const height = Number(image.height);
+        
+                return {
+                    topRow:  clarifaiFace.top_row * height,
+                    leftCol: clarifaiFace.left_col * width,
+                    bottomRow: height - (clarifaiFace.bottom_row * height),
+                    rightCol: width - (clarifaiFace.right_col * width),
+                };
+            } else {
+                console.log('error', data?.status?.description);
+                return {};
+            }
+        
     }
 
 
 
     const displayFaceBox = (box) => {
-        console.log('box', box)
+        // console.log('box', box)
         setBox(box)
+        
 
     }
     const onInputChange = (e) => {
@@ -73,7 +62,7 @@ export default function App() {
         // Change these to whatever model and image URL you want to use
         const MODEL_ID = 'face-detection';
         const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
-        const IMAGE_URL = 'https://samples.clarifai.com/metro-north.jpg';
+        const IMAGE_URL = imageUrl;
 
     
         const requestOptions = {
@@ -100,17 +89,17 @@ export default function App() {
             })
         };
 
-
+ 
 
         fetch("/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
             .then(response => response.json())
+            //     displayFaceBox(calculateFaceLocation(result))
+
             .then(result => {
 
-                calculateFaceLocation(result)
-                console.log('reed',displayFaceBox(calculateFaceLocation(result)))
-
                 
-
+                displayFaceBox(calculateFaceLocation(result))
+                
             })
             .catch(error => console.log('error', error));
 
