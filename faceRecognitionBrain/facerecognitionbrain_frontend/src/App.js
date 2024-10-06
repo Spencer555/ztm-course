@@ -7,12 +7,16 @@ import Rank from './components/Rank/Rank'
 import ParticlesBg from 'particles-bg'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import './App.css'
+import SignIn from './components/SignIn/SignIn'
+import Register from './components/Register/Register'
 
 export default function App() {
 
     const [input, setInput] = useState('')
     const [imageUrl, setImageUrl] = useState('')
     const [box, setBox] = useState({})
+    const [route, setRoute] = useState('signin')
+    const [isSignedIn, setIsSignedIn] = useState(false)
 
 
     const calculateFaceLocation = (data) => {
@@ -40,7 +44,14 @@ export default function App() {
         
     }
 
-
+const onRouteChange = (route) => {
+    if ( route === 'signout') {
+        setIsSignedIn(false)
+    } else if (route === 'home'){
+        setIsSignedIn(true)
+    }
+    setRoute(route)
+}
 
     const displayFaceBox = (box) => {
         // console.log('box', box)
@@ -108,16 +119,17 @@ export default function App() {
     return (
         <div>
             <ParticlesBg type="polygon" bg={true} />
-            <Navigation />
-            <Logo />
-
+            <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange}/>
+            { route === 'home' ? <div> 
+                <Logo />
             <Rank />
             <ImageLinkForm onInputChange={onInputChange} onSubmitButtonImage={onButtonSubmit} />
             <FaceRecognition box={box} imageUrl={imageUrl}/>
-            {/* <SignOut/>
-      
-     
-       */}
+            </div> : (
+                route === 'signin' ? <SignIn onRouteChange={onRouteChange}/> : <Register onRouteChange={onRouteChange}/>
+            )
+            }
+            
         </div>
     )
 }
