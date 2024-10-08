@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import 'tachyons'
@@ -17,8 +17,33 @@ export default function App() {
     const [box, setBox] = useState({})
     const [route, setRoute] = useState('signin')
     const [isSignedIn, setIsSignedIn] = useState(false)
+    const [user, setUser] = useState( {
+        id: "",
+        name: "",
+        email: "john@gmail.com",
+        entries: 0,
+        joined: ""
+    },)
 
+   
 
+    const loadUser = (data) => {
+        setUser({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+            entries: data.entries,
+            joined: data.joined
+        })
+
+    }
+
+    // useEffect(() => {
+    //     fetch('http://localhost:3001')
+    //     .then(res => res.json())
+    //     .then(console.log)
+    //     // same as data => console.log(data)
+    // }, []);
     const calculateFaceLocation = (data) => {
         
         
@@ -104,11 +129,22 @@ const onRouteChange = (route) => {
 
         fetch("/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
             .then(response => response.json())
-            //     displayFaceBox(calculateFaceLocation(result))
-
             .then(result => {
 
-                
+                if (result){
+                    fetch('http://localhost:3001/image', {
+                        method:'put',
+                        headers: {'Content-Type':'application/json'},
+                        body:JSON.stringify(
+                            {id:user?.id}
+                        )
+                    }).then(res => res.json())
+                    .then(count => {
+                        setUser({...user,
+                            entries: count
+                            })
+                    })
+                }
                 displayFaceBox(calculateFaceLocation(result))
                 
             })
@@ -122,11 +158,11 @@ const onRouteChange = (route) => {
             <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange}/>
             { route === 'home' ? <div> 
                 <Logo />
-            <Rank />
+            <Rank username={user?.name} user_entries={user?.entries}  />
             <ImageLinkForm onInputChange={onInputChange} onSubmitButtonImage={onButtonSubmit} />
             <FaceRecognition box={box} imageUrl={imageUrl}/>
             </div> : (
-                route === 'signin' ? <SignIn onRouteChange={onRouteChange}/> : <Register onRouteChange={onRouteChange}/>
+                route === 'signin' ? <SignIn loadUser={loadUser} onRouteChange={onRouteChange}/> : <Register loadUser={loadUser} onRouteChange={onRouteChange}/>
             )
             }
             
