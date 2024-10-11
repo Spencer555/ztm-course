@@ -1,0 +1,152 @@
+create a table
+CREATE TABLE table_name (column_1 datatype, column_2 datatype, column_3 datatype);
+
+
+
+CREATE TABLE users (name text, age smallint, birthday date);
+\d - a list of tables 
+\q - exit back to terminal
+
+insert info 
+
+INSERT INTO table_name (column_1, column_2, column_3) values(value_1, 'value_2', value_3);
+
+INSERT INTO users (name, age, birthday) values('spencer', 31, '1930-02-25');
+
+
+select specific info 
+
+SELECT name, age, birthday FROM users;
+
+
+select all info 
+SELECT * FROM users;
+
+add another column to pre existing table 
+
+ALTER TABLE users ADD new_column datatype;
+
+ALTER TABLE users ADD score smallint;
+
+
+to update 
+UPDATE table_name
+
+SET some_column = some_value 
+
+WHERE some_column = some_value
+
+UPDATE users SET score = 50 WHERE name='spencer';
+
+for both 
+UPDATE users SET score = 50 WHERE name='spencer' AND name='sally;
+
+for or 
+UPDATE users SET score = 50 WHERE name='spencer' OR name='sally;
+
+grab all users with name starting with a the a% means anything after a
+
+SELECT * FROM users WHERE name LIKE 'S%';
+
+%y ending with y
+
+
+sorting in order 
+
+SELECT * FROM users ORDER BY score DESC;
+
+sql functions 
+
+get the average of a column 
+SELECT AVG(score) FROM users;
+
+
+get the sum of a column
+select SUM(SCORE) FROM users;
+
+
+
+get count of users 
+SELECT COUNT(name) FROM users;
+
+
+creating a table 
+
+CREATE TABLE login (
+    ID serial NOT NULL PRIMARY KEY, 
+    secret VARCHAR (100) NOT NULL,
+    name text UNIQUE NOT NULL
+)
+
+
+
+INSERT INTO login (secret, name) VALUES ('abc', 'spencer');
+
+
+joining tables 
+when u create a primary key the way relational dbase is when u create a primary key it create another file called sequence to make it fast to grab data 
+so we want to get info from login and users 
+
+SELECT * FROM users JOIN login ON users.name = login.name;
+
+SELECT * FROM table_1 JOIN table_2 ON table_1_name.column = table_2_name.column;
+
+
+
+delete something 
+delete name sally
+
+DELETE FROM users WHERE name='sally';
+
+
+drop table 
+DROP TABLE users;
+
+
+
+Operator	Condition	Example
+=	Case sensitive exact string comparison (notice the single equals)	col_name = "abc"
+
+!= or <>	Case sensitive exact string inequality comparison	col_name != "abcd"
+
+LIKE	Case insensitive exact string comparison	col_name LIKE "ABC"
+
+NOT LIKE	Case insensitive exact string inequality comparison	col_name NOT LIKE "ABCD"
+
+%	Used anywhere in a string to match a sequence of zero or more characters (only with LIKE or NOT LIKE)	col_name LIKE "%AT%"  (matches "AT", "ATTIC", "CAT" or even "BATS")
+
+_	Used anywhere in a string to match a single character (only with LIKE or NOT LIKE)	col_name LIKE "AN_" (matches "AND", but not "AN")
+
+IN (…)	String exists in a list	col_name IN ("A", "B", "C")
+
+NOT IN (…)	String does not exist in a list	col_name NOT IN ("D", "E", "F")
+
+
+
+
+
+Limiting results to a subset
+Another clause which is commonly used with the ORDER BY clause are the LIMIT and OFFSET clauses, which are a useful optimization to indicate to the database the subset of the results you care about.
+The LIMIT will reduce the number of rows to return, and the optional OFFSET will specify where to begin counting the number rows from.
+
+Select query with limited rows
+SELECT column, another_column, …
+FROM mytable
+WHERE condition(s)
+ORDER BY column ASC/DESC
+LIMIT num_limit OFFSET num_offset;
+
+If you think about websites like Reddit or Pinterest, the front page is a list of links sorted by popularity and time, and each subsequent page can be represented by sets of links at different offsets in the database. Using these clauses, the database can then execute queries faster and more efficiently by processing and returning only the requested content.
+
+Did you know?
+
+
+using windows
+psql -U postgres nameofdbase 
+
+
+creating users table
+smart-brain=# CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR(100), email text UNIQUE NOT NULL, entries BIGINT DEFAULT 0, joined TIMESTAMP NOT NULL);
+
+create table login
+CREATE TABLE login (id serial PRIMARY KEY, hash VARCHAR(100) NOT NULL, email text UNIQUE NOT NULL);

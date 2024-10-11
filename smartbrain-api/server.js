@@ -2,92 +2,94 @@ const express = require('express');
 
 const app = express();
 
-const bodyParser =  require('body-parser');
+const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
-
 app.use(bodyParser.json());
 app.use(cors());
+const knex = require('knex');
 
-const database = {
-    users : [
-        {
-            id:'123',
-            name:'John',
-            email:'john@gmail.com',
-            password:'cookies',
-            entries:0,
-            joined: new Date(),
-        },
-        {
-            id:'124',
-            name:'Sally',
-            email:'Sally@gmail.com',
-            password:'bananas',
-            entries:0,
-            joined: new Date(),
-        }
-    ],login : [
-        {
-            id:'987',
-            hash:'',
-            email:'john@gmail.com'
-        }
-    ]
-}
+const db = knex({
+    client: 'pg',
+    connection: {
+        host: '127.0.0.1',
+        port: '5432',
+        user: 'postgres',
+        password: '2020',
+        database: 'smart-brain'
+    }
+});
+
 
 
 app.get('/', (req, res) => {
-    res.json(database.users);
+    db.select('*').from('users').then(response => res.json(response));
 })
 
-app.listen(3001, ()=>{
+app.listen(3001, () => {
     console.log('app is running on port 3001');
 });
 
 
 // signin 
 app.post('/signin', (req, res) => {
+    // we get the email and hash
+    db.select('email', 'hash').from('login')
+        .where('email', '=', req.body.email)
+        .then(data => {
+            const isValid = bcrypt.compareSync(req.body.password, data[0].hash); // true
 
-    console.log(req.body)
+            if (isValid) {
+                return db.select('*').from('users')
+                    .where('email', '=', req.body.email)
+                    .then(user => {
+                        res.json(user[0])
+                    }).catch(err => res.status(400).json('unable to get user'))
 
-    
-// // Load hash from your password DB.
-// bcrypt.compare("cookies", "$2a$10$BKnO2GwRd.xL4SC6ZZ8AtO7K1Ztpxe7eDZ5OLjPIprHjweg6q5hM.", function(err, res) {
-//     // res == true
-//     console.log('first guess', res)
-// });
-// bcrypt.compare("veggies", "$2a$10$BKnO2GwRd.xL4SC6ZZ8AtO7K1Ztpxe7eDZ5OLjPIprHjweg6q5hM.", function(err, res) {
-//     // res = false
-//     console.log('second guess', res)
-// });
+            } else {
+                res.status(400).json('wrong credentials')
 
-    if (req.body.email === database.users[0].email && req.body.password === database.users[0].password){
-        res.json(database.users[0])
-    } else {
-        res.status(400).json("error logging in")
-    }
-
+            }
+        })
+        .catch(err => res.status(400).json('wrong credentials'))
 })
 
 
 // register 
 app.post('/register', (req, res) => {
-    const {email, name, password, id} = req.body
-    // bcrypt.hash(password, null, null, function(err, hash) {
-    //     // Store hash in your password DB.
-    //     console.log(hash)
-    // });
-    const data = req.body
-    database.users.push({
-        id:id,
-        name:name,
-        email:email,
-        password:data.password,
-        entries:0,
-        joined: new Date(),
+    const { email, name, password, id } = req.body
+
+    // since we are running two operations at the same time we need to add transaction so if one fails all fail
+
+    var hash = bcrypt.hashSync(password);
+    // transactions are created when we have to do more than 2 things at once
+
+    // and u use trx instead of db to do transactions
+    db.transaction(trx => {
+        trx.insert({
+            hash: hash, email: email
+        })
+            .into('login')
+            .returning('email')
+            // we insert to long and it returns the email and we pass it to insert into users
+            .then(loginEmail => {
+                // insert and return all the inserted col
+                // we now inserts it in the users
+                trx('users').returning('*').insert({
+                    email: loginEmail[0].email,
+                    name: name,
+                    joined: new Date()
+                }).then(user => {
+                    res.json(user[0]);
+
+                }).then(trx.commit)
+                    // if all pass commit
+                    .catch(trx.rollback)
+                // if one fail rollback
+            }).catch(err => console.log('unable to register'))
     })
-    res.json(database.users[database.users.length-1])
+
+
 })
 
 
@@ -95,43 +97,33 @@ app.post('/register', (req, res) => {
 
 // profile
 app.get('/profile/:id', (req, res) => {
-    const {id} = req.params;
-    let found = false;
-    database.users.forEach((user) => {
-        if (user.id === id){
-            found = true;
-            return res.json(user)
-        } })
+    const { id } = req.params;
+    db.select('*').from('users').where({ id }).then(user => {
+        if (user.length) {
+            res.json(user[0])
+        } else {
+            res.status(400).json('Not Found')
+        }
+    }).catch(err => console.log('error getting user'))
 
-        if(!found){ 
-            return res.status(404).json("No Such User")
-        } 
 })
 
 // image - update user to increase entry count anytime they submit an image 
 app.put('/image', (req, res) => {
     const id = req.body.id.toString();
+    db('users').where('id', '=', id)
+        .increment('entries', 1).returning('entries')
+        .then(entries => {
+            res.json(entries[0].entries)
+        }).catch(err => res.status(400).json('unable to register'))
 
-    let found = false;
-    database.users.forEach((user) => {
-        if (user.id === id){
-            found = true;
-            user.entries++
-            console.log(user.entries)
-
-            return res.json(user.entries);
-        } })
-
-        if(!found){ 
-            return res.status(404).json("No Such User")
-        } 
-}) 
+})
 
 
 
-// planing your api 
+// planing your api
 // /--> res  = GET this is working
 // /signin --> = POST - success/fail
-//  /register --> = POST - user 
+//  /register --> = POST - user
 //  /profile/:userId --> = GET - user
 // /image --> PUT  --> updatedUserObject 
