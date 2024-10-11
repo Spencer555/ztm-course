@@ -31,16 +31,17 @@ export default function Register({onRouteChange, loadUser}) {
       body:JSON.stringify({email,password,name})
     }).then(res => res.json())
     .then(user => {
-      if (user){
+      if (user?.id){
+        console.log(user)
         loadUser(user)
         onRouteChange("home")
       }
-    })
+    }).catch(console.log)
     
   }
 
   return (
-    <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+    <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-30-l mw6 shadow-5 center">
     <main className="pa4 black-80">
       <div className="measure">
         <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -52,6 +53,7 @@ export default function Register({onRouteChange, loadUser}) {
               type="text"
               name="name"
               id="name"
+              required
               onChange={onNameChange}
             />
           </div>
@@ -62,6 +64,7 @@ export default function Register({onRouteChange, loadUser}) {
               type="email"
               name="email-address"
               id="email-address"
+              required
               onChange={onEmailChange}
             />
           </div>
@@ -72,6 +75,7 @@ export default function Register({onRouteChange, loadUser}) {
               type="password"
               name="password"
               id="password"
+              required
               onChange={onPasswordChange}
             />
           </div>

@@ -29,7 +29,7 @@ export default function SignIn({ onRouteChange, loadUser }) {
         loadUser(user)
         onRouteChange("home")
       }
-    })
+    }).catch(console.log)
     
   }
 
@@ -46,6 +46,7 @@ export default function SignIn({ onRouteChange, loadUser }) {
                 type="email"
                 name="email-address"
                 id="email-address"
+                required
                 onChange={onEmailChange}
               />
             </div>
@@ -56,6 +57,7 @@ export default function SignIn({ onRouteChange, loadUser }) {
                 type="password"
                 name="password"
                 id="password"
+                required
                 onChange={onPasswordChange}
               />
             </div>

@@ -17,15 +17,14 @@ export default function App() {
     const [box, setBox] = useState({})
     const [route, setRoute] = useState('signin')
     const [isSignedIn, setIsSignedIn] = useState(false)
-    const [user, setUser] = useState( {
+    const [user, setUser] = useState({
         id: "",
         name: "",
-        email: "john@gmail.com",
+        email: "",
         entries: 0,
         joined: ""
     },)
 
-   
 
     const loadUser = (data) => {
         setUser({
@@ -45,43 +44,55 @@ export default function App() {
     //     // same as data => console.log(data)
     // }, []);
     const calculateFaceLocation = (data) => {
-        
-        
-            const regions = data.outputs[0].data.regions; // Check if 'regions' still exists
-            console.log(data)
-        
-            if (regions && regions.length > 0) {
-                const clarifaiFace = regions[0].region_info.bounding_box;
-                const image = document.getElementById('inputImage');
-                const width = Number(image.width);
-                const height = Number(image.height);
-        
-                return {
-                    topRow:  clarifaiFace.top_row * height,
-                    leftCol: clarifaiFace.left_col * width,
-                    bottomRow: height - (clarifaiFace.bottom_row * height),
-                    rightCol: width - (clarifaiFace.right_col * width),
-                };
-            } else {
-                console.log('error', data?.status?.description);
-                return {};
-            }
-        
+
+
+        const regions = data.outputs[0].data.regions; // Check if 'regions' still exists
+        console.log(data)
+
+        if (regions && regions.length > 0) {
+            const clarifaiFace = regions[0].region_info.bounding_box;
+            const image = document.getElementById('inputImage');
+            const width = Number(image.width);
+            const height = Number(image.height);
+
+            return {
+                topRow: clarifaiFace.top_row * height,
+                leftCol: clarifaiFace.left_col * width,
+                bottomRow: height - (clarifaiFace.bottom_row * height),
+                rightCol: width - (clarifaiFace.right_col * width),
+            };
+        } else {
+            console.log('error', data?.status?.description);
+            return {};
+        }
+
     }
 
-const onRouteChange = (route) => {
-    if ( route === 'signout') {
+    const onRouteChange = (route) => {
+        if (route === 'signout') {
+            setIsSignedIn(false)
+            setUser({
+                id: "",
+                name: "",
+                email: "",
+                entries: 0,
+                joined: ""
+            })
+        setInput('')
+        setImageUrl('')
+        setBox({})
+        setRoute('signin')
         setIsSignedIn(false)
-    } else if (route === 'home'){
-        setIsSignedIn(true)
+        } else if (route === 'home') {
+            setIsSignedIn(true)
+        }
+        setRoute(route)
     }
-    setRoute(route)
-}
 
     const displayFaceBox = (box) => {
         // console.log('box', box)
         setBox(box)
-        
+
 
     }
     const onInputChange = (e) => {
@@ -100,7 +111,7 @@ const onRouteChange = (route) => {
         const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
         const IMAGE_URL = imageUrl;
 
-    
+
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -125,28 +136,29 @@ const onRouteChange = (route) => {
             })
         };
 
- 
+
 
         fetch("/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
             .then(response => response.json())
             .then(result => {
 
-                if (result){
+                if (result) {
                     fetch('http://localhost:3001/image', {
-                        method:'put',
-                        headers: {'Content-Type':'application/json'},
-                        body:JSON.stringify(
-                            {id:user?.id}
+                        method: 'put',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(
+                            { id: user?.id }
                         )
                     }).then(res => res.json())
-                    .then(count => {
-                        setUser({...user,
-                            entries: count
+                        .then(count => {
+                            setUser({
+                                ...user,
+                                entries: count
                             })
-                    })
+                        }).catch(console.log)
                 }
                 displayFaceBox(calculateFaceLocation(result))
-                
+
             })
             .catch(error => console.log('error', error));
 
@@ -155,17 +167,17 @@ const onRouteChange = (route) => {
     return (
         <div>
             <ParticlesBg type="polygon" bg={true} />
-            <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange}/>
-            { route === 'home' ? <div> 
+            <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
+            {route === 'home' ? <div>
                 <Logo />
-            <Rank username={user?.name} user_entries={user?.entries}  />
-            <ImageLinkForm onInputChange={onInputChange} onSubmitButtonImage={onButtonSubmit} />
-            <FaceRecognition box={box} imageUrl={imageUrl}/>
+                <Rank username={user?.name} user_entries={user?.entries} />
+                <ImageLinkForm onInputChange={onInputChange} onSubmitButtonImage={onButtonSubmit} />
+                <FaceRecognition box={box} imageUrl={imageUrl} />
             </div> : (
-                route === 'signin' ? <SignIn loadUser={loadUser} onRouteChange={onRouteChange}/> : <Register loadUser={loadUser} onRouteChange={onRouteChange}/>
+                route === 'signin' ? <SignIn loadUser={loadUser} onRouteChange={onRouteChange} /> : <Register loadUser={loadUser} onRouteChange={onRouteChange} />
             )
             }
-            
+
         </div>
     )
 }
