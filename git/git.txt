@@ -65,3 +65,6 @@ git pull upstream master
 
 to remove the origial origin of a forked project 
 git remote remove origin now you have only the original copy to worry about
+
+git branch -m master main
+rename master to main

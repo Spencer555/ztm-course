@@ -10,7 +10,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 
     var hash = bcrypt.hashSync(password);
     // transactions are created when we have to do more than 2 things at once
-
+    
     // and u use trx instead of db to do transactions
     db.transaction(trx => {
         trx.insert({
